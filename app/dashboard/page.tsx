@@ -61,21 +61,45 @@ function DashboardContent() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome to HEEPL Dashboard</h1>
           <p className="text-muted-foreground">
-            Welcome to your wastewater monitoring dashboard
+            Set up your wastewater monitoring system to get started
           </p>
         </div>
         
-        <Card className="border-2 border-yellow-200 dark:border-yellow-800">
+        <Card className="border-2 border-blue-200 dark:border-blue-800">
           <CardHeader>
-            <CardTitle className="text-yellow-600">Client Structure Required</CardTitle>
+            <CardTitle className="text-blue-600 flex items-center gap-2">
+              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                <span className="text-blue-600 dark:text-blue-400 text-sm">🚀</span>
+              </div>
+              Get Started with Your Monitoring System
+            </CardTitle>
             <CardDescription>
-              Your client structure needs to be set up to access live sensor data.
+              To access live sensor data and monitoring features, you need to set up your client structure first.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
+            <div className="bg-blue-50 dark:bg-blue-950/50 p-4 rounded-lg">
+              <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">What you'll get:</h4>
+              <ul className="space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                <li>• Real-time sensor data monitoring</li>
+                <li>• Historical data analysis</li>
+                <li>• Device management capabilities</li>
+                <li>• Basic alerts and notifications</li>
+              </ul>
+            </div>
+            
             <ClientStructureManager />
+            
+            <div className="text-xs text-gray-500 dark:text-gray-400 space-y-2">
+              <p><strong>Need help?</strong></p>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>Check the <a href="/dashboard/help" className="text-blue-600 hover:underline">Help section</a> for detailed guides</li>
+                <li>Contact support if you encounter any issues</li>
+                <li>Your data will be isolated and secure</li>
+              </ul>
+            </div>
           </CardContent>
         </Card>
       </div>

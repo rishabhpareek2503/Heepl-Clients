@@ -37,28 +37,30 @@ export function useClientId() {
           return
         }
         
-        // If not found, check the legacy hardcoded client ID
-        const legacyClientId = "TyWRS0Zyusc3tbtcU0PcBPdXSjb2"
-        const legacyClientRef = ref(realtimeDb, `Clients/${legacyClientId}`)
-        const legacyClientSnapshot = await get(legacyClientRef)
-        
-        if (legacyClientSnapshot.exists()) {
-          console.log("Found legacy client structure, using hardcoded client ID")
-          setClientId(legacyClientId)
-          setIsLegacyClient(true)
-          setLoading(false)
-          return
+        // For new users, check if they should use legacy client ID (only for specific users)
+        // This should be a whitelist approach, not a fallback for all users
+        const legacyUsers = ["manamimaity2002@gmail.com"] // Add specific users who need legacy access
+        if (legacyUsers.includes(user.email || "")) {
+          const legacyClientId = "TyWRS0Zyusc3tbtcU0PcBPdXSjb2"
+          const legacyClientRef = ref(realtimeDb, `Clients/${legacyClientId}`)
+          const legacyClientSnapshot = await get(legacyClientRef)
+          
+          if (legacyClientSnapshot.exists()) {
+            console.log("Found legacy client structure for whitelisted user:", user.email)
+            setClientId(legacyClientId)
+            setIsLegacyClient(true)
+            setLoading(false)
+            return
+          }
         }
         
-        // If neither exists, try to create one for the user
-        console.log("No client structure found, attempting to create one")
-        const id = await getClientIdForUser(user.uid)
-        setClientId(id)
+        // For new users, don't automatically create or assign client structure
+        // Let them set it up manually through the dashboard
+        console.log("No client structure found for new user:", user.email)
+        setClientId(null)
         setIsLegacyClient(false)
+        setError("No client structure found. Please set up your client structure.")
         
-        if (!id) {
-          setError("Failed to get client ID. Client structure may not exist.")
-        }
       } catch (err) {
         console.error("Error fetching client ID:", err)
         setError("Failed to fetch client ID")
